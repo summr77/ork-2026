@@ -1,16 +1,16 @@
 (() => {
   // 10 kód
   const COUPONS = [
-    "OKX7Q2M9",
-    "N4P8Z1KD",
-    "H3V6T9RA",
-    "C8J2W5YQ",
-    "M7S1B4XN",
-    "R2K9D6PL",
-    "Z5T3Q8HF",
-    "V9N6A2JC",
-    "D1Y7P4ZW",
-    "P6H8L3MS"
+    "ORKX72M9",
+    "N4ORK1KD",
+    "H3V6TORK",
+    "7ORKW5YQ",
+    "M7SORKXN",
+    "R2K9ORKL",
+    "ORK3Q8HF",
+    "VORKA288",
+    "D1ORK4ZW",
+    "P6H8ORKS"
   ];
 
   // Kulcsok a tároláshoz (különböző kampányoknál változtasd meg)
