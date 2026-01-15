@@ -1,0 +1,63 @@
+(() => {
+  // 10 kód
+  const COUPONS = [
+    "OKX7Q2M9",
+    "N4P8Z1KD",
+    "H3V6T9RA",
+    "C8J2W5YQ",
+    "M7S1B4XN",
+    "R2K9D6PL",
+    "Z5T3Q8HF",
+    "V9N6A2JC",
+    "D1Y7P4ZW",
+    "P6H8L3MS"
+  ];
+
+  // Kulcsok a tároláshoz (különböző kampányoknál változtasd meg)
+  const STORAGE_KEY = "campaign_coupon_v1";
+  const STORAGE_TS_KEY = "campaign_coupon_v1_ts";
+
+  // Opcionális: lejárat (pl. 7 nap). Ha nem kell, állítsd null-ra.
+  const TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 nap
+  // const TTL_MS = null;
+
+  const codeEl = document.getElementById("couponCode");
+  const btn = document.getElementById("copyCoupon");
+  const msgEl = document.getElementById("couponMsg");
+  if (!codeEl) return;
+
+  function isExpired() {
+    if (!TTL_MS) return false;
+    const ts = Number(localStorage.getItem(STORAGE_TS_KEY) || "0");
+    if (!ts) return true;
+    return Date.now() - ts > TTL_MS;
+  }
+
+  function pickRandom() {
+    return COUPONS[Math.floor(Math.random() * COUPONS.length)];
+  }
+
+  function getOrCreateCoupon() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved && !isExpired()) return saved;
+
+    const picked = pickRandom();
+    localStorage.setItem(STORAGE_KEY, picked);
+    localStorage.setItem(STORAGE_TS_KEY, String(Date.now()));
+    return picked;
+  }
+
+  const coupon = getOrCreateCoupon();
+  codeEl.textContent = coupon;
+
+  if (btn) {
+    btn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(coupon);
+        if (msgEl) msgEl.textContent = `Kimásolva: ${coupon}`;
+      } catch {
+        if (msgEl) msgEl.textContent = "Nem sikerült automatikusan másolni. Jelöld ki és másold kézzel.";
+      }
+    });
+  }
+})();
